@@ -274,7 +274,35 @@ definirNombresDirectorios(){
 
 }
 
+grabarArchConf(){
+	FECHA=`date "+%d/%m/%Y %H:%M"`
+	USR="$USER"
 
+	echo "GRUPO=$GRUPO=$USR=$FECHA" >> "$ARCHCONF"
+	echo "DIRCONF=$DIRCONF=$USR=$FECHA" >> "$ARCHCONF"
+	echo "DIRBIN=$DIRBIN=$USR=$FECHA" >> "$ARCHCONF"
+	echo "DIRMA=$DIRMA=$USR=$FECHA" >> "$ARCHCONF"
+	echo "DIRNOV=$DIRNOV=$USR=$FECHA" >> "$ARCHCONF"
+	echo "DIRACE=$DIRACE=$USR=$FECHA" >> "$ARCHCONF"
+	echo "DIRREJ=$DIRREJ=$USR=$FECHA" >> "$ARCHCONF"
+	echo "DIRVAL=$DIRVAL=$USR=$FECHA" >> "$ARCHCONF"
+	echo "DIRREP=$DIRREP=$USR=$FECHA" >> "$ARCHCONF"
+	echo "DIRLOG=$DIRLOG=$USR=$FECHA" >> "$ARCHCONF"
+	echo "ARCHCONF=$ARCHCONF=$USR=$FECHA" >> "$ARCHCONF"
+}
+
+generarDirectorios(){
+	cd `basename "$GRUPO"
+	mkdir `basename "$DIRBIN"` 
+	mkdir `basename "$DIRMA"`
+	mkdir `basename "$DIRNOV"`
+	mkdir `basename "$DIRACE"`
+	mkdir `basename "$DIRREJ"`
+	mkdir `basename "$DIRVAL"`
+	mkdir `basename "$DIRREP"`
+	mkdir `basename "$DIRLOG"`
+	cd ..
+}
 
 ##############################################################################
 
@@ -300,7 +328,21 @@ fi
 
 chequeoPerl
 
-definirNombresDirectorios
+if [ "$1" = "-i" ]; then
+	
+	if [ ! -e "$ARCHCONF" ]; then
+		#definirNombresDirectorios
+		grabarArchConf
+		generarDirectorios
+	else
+		echo 
+		#reinstalacion (Sprint2)
+	fi
+
+fi
+
+
+
 
 
 	
