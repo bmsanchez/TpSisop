@@ -1,4 +1,4 @@
-#INTALADOR
+#INSTALADOR
 
 ############################## CONSTANTES ###################################
 
@@ -7,6 +7,9 @@ GRUPO=`pwd`"/Grupo01/"
 
 #Declaro subdirectorio dirconf (RESERVADO)
 DIRCONF="$GRUPO""dirconf/"
+
+#PATH al archivo de config
+ARCHCONF="$DIRCONF""arch.conf"
 
 #Declaro subdirectorio ejecutable (DEFAULT)
 DIRBIN="$GRUPO""bin/"
@@ -32,8 +35,6 @@ DIRREP="$GRUPO""reportes/"
 #Declaro subdirectorio log (DEFAULT)
 DIRLOG="$GRUPO""log/"
 
-#PATH al archivo de config
-ARCHCONF="$DIRCONF""arch.conf"
 
 ##############################################################################
 
@@ -292,7 +293,7 @@ grabarArchConf(){
 }
 
 generarDirectorios(){
-	cd `basename "$GRUPO"
+	cd `basename "$GRUPO"`
 	mkdir `basename "$DIRBIN"` 
 	mkdir `basename "$DIRMA"`
 	mkdir `basename "$DIRNOV"`
@@ -307,6 +308,10 @@ generarDirectorios(){
 ##############################################################################
 
 ################################### MAIN ####################################
+if [ "$#" != 1 ]; then
+	echo "Modo de uso: $0 [argumento]"
+	exit 0
+fi
 
 if [ "$1" = "-t" ]; then
 
@@ -331,7 +336,9 @@ chequeoPerl
 if [ "$1" = "-i" ]; then
 	
 	if [ ! -e "$ARCHCONF" ]; then
-		#definirNombresDirectorios
+		echo "Instalando sistema..."
+		echo
+		definirNombresDirectorios
 		grabarArchConf
 		generarDirectorios
 	else
